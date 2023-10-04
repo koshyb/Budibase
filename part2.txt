@@ -1,0 +1,9 @@
+=== Issue: Incorrect Hostname ===
+
+Problem: 
+- The "connect ECONNREFUSED" error message indicates that Budibase is trying to connect to the PostgreSQL database server at the address "127.0.0.1" on port "5432," but it's unable to establish a connection
+
+Solution:
+- You need to ensure that Budibase uses the correct hostname or IP address for the PostgreSQL server.
+From whats specificied on your docker-compose file, the 'Host' would be "postgres" so,
+changing "localhost" to "postgres" will resolve this

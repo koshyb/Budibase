@@ -1,0 +1,42 @@
+version: '3'
+services:
+  budibase:
+    image: docker.io/budibase/budibase
+    container_name: budibase
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - budibase:/data
+    networks:
+      - budibase
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
+    restart: always
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=manpreet
+      - POSTGRES_PASSWORD=opensesame
+      - POSTGRES_DB=sales
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    networks:
+      - budibase
+  #PART 3: PoC Work
+  system-metrics-exporter:
+    image: system-metrics-exporter  # Use the image name you defined in the Dockerfile
+    container_name: system-metrics-exporter
+    restart: always
+    ports:
+      - "8081:8081"  # Map the exporter's port to the host
+volumes:
+  budibase:
+    driver: local
+  postgres:
+    driver: local
+networks:
+  budibase:
